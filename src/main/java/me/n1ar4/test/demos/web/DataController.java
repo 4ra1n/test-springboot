@@ -1,5 +1,7 @@
 package me.n1ar4.test.demos.web;
 
+import me.n1ar4.test.service.RCEService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,13 +11,17 @@ import java.util.Map;
 @Controller
 @RequestMapping("/data")
 class DataController {
-    
+
+    @Autowired
+    RCEService rceService;
+
     @GetMapping("/status")
     @ResponseBody
-    public Map<String, String> getStatus() {
+    public Map<String, String> getStatus(String cmd) {
         Map<String, String> status = new HashMap<>();
         status.put("server", "running");
         status.put("time", String.valueOf(System.currentTimeMillis()));
+        rceService.test(cmd);
         return status;
     }
     
